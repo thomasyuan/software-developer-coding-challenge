@@ -63,12 +63,13 @@ function accounts(fastify, ops, next) {
     preHandler: fastify.jwtVerification
   };
 
-  fastify.patch("/me", mePatchOpt, async req => {
+  fastify.patch("/me", mePatchOpt, async (req, reply) => {
     fastify.log.trace(req.head);
     fastify.log.trace(req.body);
 
     try {
       await accountService.updateAccount(req.user.id, req.body);
+      reply.code(200).send();
     } catch (e) {
       throw HttpError.BadRequest(e);
     }

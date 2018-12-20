@@ -140,9 +140,9 @@ describe("Test Account", function() {
         })
         .end(function(err, res) {
           expect(res.statusCode).to.equal(200);
-          done();
         });
 
+      // verify
       supertest(fastify.server)
         .get("/me")
         .set("Authorization", `Bearer ${token}`)
