@@ -467,7 +467,7 @@ components:
         - brand
         - model
         - year
-        - odomete
+        - odometer
         - color
       properties:
         brand:
@@ -479,7 +479,7 @@ components:
         year:
           type: number
           example: 2015
-        odomete:
+        odometer:
           type: number
           example: 34000
         color:
@@ -493,7 +493,7 @@ components:
         - brand
         - model
         - year
-        - odomete
+        - odometer
         - color
       properties:
         id:
@@ -508,7 +508,7 @@ components:
         year:
           type: number
           example: 2015
-        odomete:
+        odometer:
           type: number
           example: 34000
         color:

@@ -1,6 +1,8 @@
 "use strict";
 
 const accounts = new Map();
+const bids = new Map();
+const vehicles = new Map();
 
 class MemoryStorage {
   async addAccount(account) {
@@ -24,9 +26,45 @@ class MemoryStorage {
       throw new Error(`Account ${id} does not exist.`);
     }
 
-    for (const k in account) {
-      exist[k] = account[k];
+    const updated = Object.assign(exist, account);
+    accounts.set(id, updated);
+  }
+
+  filterMap(map, filter) {
+    const results = [];
+    for (const v of map.values()) {
+      let match = true;
+      for (const k in filter) {
+        if (v[k] !== filter[k]) {
+          match = false;
+          break;
+        }
+      }
+
+      if (match) {
+        results.push(v);
+      }
     }
+
+    return results;
+  }
+
+  async addVehicle(vehicle) {
+    const id = vehicles.size;
+    vehicle.id = id;
+    vehicles.set(id, vehicle);
+  }
+
+  async getVehicle(vid) {
+    return vehicles.get(vid);
+  }
+
+  async getVehicles(filter) {
+    return this.filterMap(vehicles, filter);
+  }
+
+  async getBids(filter) {
+    return this.filterMap(bids, filter);
   }
 
   async shutdown() {}

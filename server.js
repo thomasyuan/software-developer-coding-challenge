@@ -1,12 +1,14 @@
 "use strict";
 
 const Fastify = require("fastify");
-const cors = require("cors");
 const config = require("config");
-const authentication = require("./src/plugin/authentication");
-const account = require("./src/controller/account-controller");
+const cors = require("cors");
 const settings = require("./src/plugin/settings");
 const storageInjector = require("./src/plugin/storage-injector");
+const authentication = require("./src/plugin/authentication");
+const account = require("./src/controller/account-controller");
+const bid = require("./src/controller/bid-controller");
+const vehicle = require("./src/controller/vehicle-controller");
 
 function loadSetting() {
   const logSettings = config.get("log");
@@ -29,6 +31,8 @@ function buildFastify() {
   fastify.register(storageInjector);
   fastify.register(authentication);
   fastify.register(account);
+  fastify.register(bid);
+  fastify.register(vehicle);
 
   return fastify;
 }
