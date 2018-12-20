@@ -98,11 +98,11 @@ describe("Test Account", function() {
   });
 
   describe("GET /me", function() {
-    it("should return 400 without jwt", function(done) {
+    it("should return 401 without jwt", function(done) {
       supertest(fastify.server)
         .get("/me")
         .end(function(err, res) {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(401);
           done();
         });
     });
@@ -122,9 +122,22 @@ describe("Test Account", function() {
   });
 
   describe("PATCH /me", function() {
-    it("should return 400 without jwt", function(done) {
+    it("should return 401 without jwt", function(done) {
       supertest(fastify.server)
         .patch("/me")
+        .end(function(err, res) {
+          expect(res.statusCode).to.equal(401);
+          done();
+        });
+    });
+
+    it("should return 400 with jwt and invalid input", function(done) {
+      supertest(fastify.server)
+        .patch("/me")
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          firstname: "Thomas"
+        })
         .end(function(err, res) {
           expect(res.statusCode).to.equal(400);
           done();

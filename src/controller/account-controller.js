@@ -15,7 +15,7 @@ function accounts(fastify, ops, next) {
     fastify.log.trace(req.body);
 
     try {
-      await accountService.createAccount(req.body);
+      await accountService.createAccount(Object.assign(req.body));
       const payload = {
         exp: Math.floor(Date.now() / 1000) + fastify.settings.jwt.lifetime,
         id: req.body.id
@@ -45,7 +45,7 @@ function accounts(fastify, ops, next) {
 
   const meGetOpt = {
     schema: Schema.meGet,
-    preHandler: fastify.jwtVerification
+    preValidation: fastify.jwtVerification
   };
 
   fastify.get("/me", meGetOpt, async req => {
@@ -60,15 +60,20 @@ function accounts(fastify, ops, next) {
 
   const mePatchOpt = {
     schema: Schema.mePatch,
-    preHandler: fastify.jwtVerification
+    preValidation: fastify.jwtVerification
   };
 
   fastify.patch("/me", mePatchOpt, async (req, reply) => {
     fastify.log.trace(req.head);
     fastify.log.trace(req.body);
 
+    // empty object
+    if (Object.values(req.body).length === 0) {
+      throw HttpError.BadRequest("invalid input");
+    }
+
     try {
-      await accountService.updateAccount(req.user.id, req.body);
+      await accountService.updateAccount(req.user.id, Object.assign(req.body));
       reply.code(200).send();
     } catch (e) {
       throw HttpError.BadRequest(e);
