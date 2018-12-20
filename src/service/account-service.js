@@ -20,6 +20,15 @@ class Account {
   async updateAccount(id, account) {
     await this.storage.updateAccount(id, account);
   }
+
+  async verifyPassword(id, password) {
+    const account = await this.storage.getAccount(id);
+    if (account && account.password === password) {
+      return true;
+    }
+
+    return false;
+  }
 }
 
 module.exports = Account;

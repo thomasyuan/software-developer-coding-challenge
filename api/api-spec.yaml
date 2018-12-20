@@ -1,7 +1,7 @@
 openapi: 3.0.0
 servers:
   - description: Local Host
-    url: http://localhost:5000
+    url: http://localhost:8000
   - description: SwaggerHub API Auto Mocking
     url: https://virtserver.swaggerhub.com/thomasyuan/TradeRev/1.0
 
@@ -14,8 +14,6 @@ info:
 tags:
   - name: Account
     description: account
-  - name: Authentication
-    description: login/logout
   - name: Vehicle
     description: vehicle
   - name: Bid
@@ -119,7 +117,7 @@ paths:
   /me/bids:
     get:
       tags:
-        - Account
+        - Bid
       summary: get all bids of current user
       description: |
         get all bids of current user
@@ -142,7 +140,7 @@ paths:
   /me/vehicles:
     get:
       tags:
-        - Account
+        - Vehicle
       summary: get all vehicles of current user
       description: |
         get all vehicles of current user
@@ -305,7 +303,7 @@ paths:
   /login:
     post:
       tags:
-        - Authentication
+        - Account
       summary: login to get a json-web-token
       requestBody:
         description: account id and password

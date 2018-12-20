@@ -168,4 +168,49 @@ describe("Test Account", function() {
         });
     });
   });
+
+  describe("POST /login", function() {
+    it("should return token with correct id and password", function(done) {
+      supertest(fastify.server)
+        .post("/login")
+        .send({
+          id: "johnsmith",
+          password: "secret"
+        })
+        .end(function(err, res) {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body).to.be.an("object");
+          expect(res.body).to.have.key("token");
+          done();
+        });
+    });
+
+    it("should return 400 with invalid data", function(done) {
+      supertest(fastify.server)
+        .post("/login")
+        .send({
+          name: "johnsmith",
+          password: "secret2"
+        })
+        .end(function(err, res) {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body).to.be.an("object");
+          done();
+        });
+    });
+
+    it("should return 400 with in-correct id and password", function(done) {
+      supertest(fastify.server)
+        .post("/login")
+        .send({
+          id: "johnsmith",
+          password: "secret2"
+        })
+        .end(function(err, res) {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body).to.be.an("object");
+          done();
+        });
+    });
+  });
 });

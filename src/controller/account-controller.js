@@ -80,6 +80,31 @@ function accounts(fastify, ops, next) {
     }
   });
 
+  const loginOpt = {
+    schema: Schema.login
+  };
+
+  fastify.post("/login", loginOpt, async req => {
+    fastify.log.trace(req.body);
+
+    const passed = await accountService.verifyPassword(
+      req.body.id,
+      req.body.password
+    );
+
+    if (!passed) {
+      throw HttpError.BadRequest("invalid username and password");
+    }
+
+    const payload = {
+      exp: Math.floor(Date.now() / 1000) + fastify.settings.jwt.lifetime,
+      id: req.body.id
+    };
+
+    const token = await fastify.jwt.sign(payload);
+    return { token: token };
+  });
+
   next();
 }
 

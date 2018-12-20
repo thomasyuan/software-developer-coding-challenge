@@ -9,7 +9,8 @@ module.exports.accountsPost = {
       email: { type: "string", format: "email" },
       password: { type: "string" }
     },
-    required: ["id", "name", "email", "password"]
+    required: ["id", "name", "email", "password"],
+    additionalProperties: false
   },
 
   response: {
@@ -72,5 +73,27 @@ module.exports.mePatch = {
       password: { type: "string" }
     },
     additionalProperties: false
+  }
+};
+
+module.exports.login = {
+  body: {
+    type: "object",
+    properties: {
+      id: { type: "string" },
+      password: { type: "string" }
+    },
+    required: ["id", "password"],
+    additionalProperties: false
+  },
+
+  response: {
+    200: {
+      type: "object",
+      properties: {
+        token: { type: "string" }
+      },
+      required: ["token"]
+    }
   }
 };
