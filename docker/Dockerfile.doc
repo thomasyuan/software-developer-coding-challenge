@@ -1,0 +1,4 @@
+FROM swaggerapi/swagger-ui:3.18.1
+
+WORKDIR /usr/share/nginx/html
+COPY ./api/api-spec.yaml .

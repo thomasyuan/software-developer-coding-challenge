@@ -1,0 +1,22 @@
+{
+  "storage": {
+    "type": "STORAGE_TYPE",
+    "db": {
+      "host": "STORAGE_DB_HOST",
+      "database": "STORAGE_DB_DATABASE",
+      "user": "STORAGE_DB_USER",
+      "password": "STORAGE_DB_PASSWORD",
+      "debug": "STORAGE_DB_DEBUG"
+    }
+  },
+  "jwt": {
+    "signing_key": "JWT_SIGNING_KEY"
+  },
+  "log": {
+    "enable": "LOG_ENABLE"
+  },
+  "app": {
+    "host": "APP_HOST",
+    "port": "APP_PORT"
+  }
+}

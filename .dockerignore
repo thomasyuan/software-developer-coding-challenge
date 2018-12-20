@@ -1,0 +1,12 @@
+node_modules
+Dockerfile*
+.git
+.gitlab-ci.yml
+.dockerignore
+.gitignore
+*.md
+.vscode
+.eslintrc.json
+docker-compose.yml
+.nyc_output/
+.DS_Store

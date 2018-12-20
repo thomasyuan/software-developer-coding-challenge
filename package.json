@@ -1,0 +1,46 @@
+{
+  "name": "auction-backend",
+  "version": "1.0.0",
+  "description": "Auction API Service.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "prettylint": "prettylint 'index.js' 'server.js' 'src/**/*.js'",
+    "test": "LOG_ENABLE='false' nyc --reporter=text-summary mocha test/bootstrap.js test/*.test.js --timeout 60000",
+    "lint": "eslint index.js server.js src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thomasyuan/software-developer-coding-challenge.git"
+  },
+  "keywords": [
+    "Auction",
+    "Backend"
+  ],
+  "author": "thomas@cppcoder.net",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thomasyuan/software-developer-coding-challenge/issues"
+  },
+  "homepage": "https://github.com/thomasyuan/software-developer-coding-challenge",
+  "dependencies": {
+    "config": "2.0.1",
+    "cors": "^2.8.4",
+    "fastify": "2.0.0-rc.0",
+    "fastify-jwt": "^0.5.0",
+    "fastify-plugin": "^1.2.1",
+    "knex": "^0.16.3"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "chai": "^4.2.0",
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
+    "prettier": "^1.15.2",
+    "prettylint": "^1.0.0",
+    "supertest": "^3.3.0"
+  }
+}

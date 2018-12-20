@@ -1,0 +1,613 @@
+openapi: 3.0.0
+servers:
+  - description: Local Host
+    url: http://localhost:5000
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/thomasyuan/TradeRev/1.0
+
+info:
+  version: "1.0.0"
+  title: Acution API
+  contact:
+    email: thomas@cppcoder.net
+
+tags:
+  - name: Account
+    description: account
+  - name: Authentication
+    description: login/logout
+  - name: Vehicle
+    description: vehicle
+  - name: Bid
+    description: Bid
+
+paths:
+  /accounts:
+    post:
+      tags:
+        - Account
+      summary: create a new account
+      description: |
+        Create a new account.
+      requestBody:
+        description: account information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Account"
+      responses:
+        "200":
+          description: account is created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JWT"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /accounts/{id}:
+    head:
+      tags:
+        - Account
+      summary: check if account exist
+      description: |
+        If account already exists, return http status code 200.
+      parameters:
+        - in: path
+          name: id
+          description: account id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: account exists
+        "404":
+          description: account does not exist
+
+  /me:
+    get:
+      tags:
+        - Account
+      security:
+        - BearerAuth: []
+      summary: get current user information
+      description: |
+        Get current user information
+      responses:
+        "200":
+          description: fetch account information success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountGet"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+    patch:
+      tags:
+        - Account
+      summary: update account information
+      description: |
+        Update account information. After get the account id from flinks, client should call this endpoint to update account info, and get a JSON Web Token, which should be sent with the subsequent request.
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: account information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountPatch"
+      responses:
+        "200":
+          description: account is updated
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /me/bids:
+    get:
+      tags:
+        - Account
+      summary: get all bids of current user
+      description: |
+        get all bids of current user
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: get all bids success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountBids"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /me/vehicles:
+    get:
+      tags:
+        - Account
+      summary: get all vehicles of current user
+      description: |
+        get all vehicles of current user
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: get all vehicles success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vehicles"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /vehicles:
+    post:
+      tags:
+        - Vehicle
+      security:
+        - BearerAuth: []
+      summary: create a new vehicle for sale
+      description: |
+        create a new vehicle for sale
+      requestBody:
+        description: account information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VehiclePost"
+      responses:
+        "200":
+          description: vehicle is created
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+    get:
+      tags:
+        - Vehicle
+      summary: get all vehicles based on filter
+      description: |
+        get all vehicles based on filter
+      parameters:
+        - in: query
+          name: brand
+          schema:
+            type: string
+            example: "BMW"
+
+      responses:
+        "200":
+          description: get all vehicles success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vehicles"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /vehicles/{id}:
+    get:
+      tags:
+        - Vehicle
+      summary: get vehicle details by id
+      description: |
+        get vehicle details by id
+      parameters:
+        - in: path
+          name: id
+          description: vehicle id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: get vehicle success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VehicleGet"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /vehicles/{id}/bids:
+    get:
+      tags:
+        - Bid
+      summary: get all bid of the vehicle
+      parameters:
+        - in: path
+          name: id
+          description: vehicle id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: get all bids success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VehicleBids"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /vehicles/{id}/winner:
+    get:
+      tags:
+        - Bid
+      summary: get the current winning bid for the car
+      parameters:
+        - in: path
+          name: id
+          description: vehicle id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: get winner bid success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VehicleBid"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /bids:
+    post:
+      tags:
+        - Bid
+      summary: put a new bid on vechile
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: bid target and price
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Bid"
+      responses:
+        "200":
+          description: success
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  /login:
+    post:
+      tags:
+        - Authentication
+      summary: login to get a json-web-token
+      requestBody:
+        description: account id and password
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Login"
+      responses:
+        "200":
+          description: account login success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JWT"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Account:
+      type: object
+      required:
+        - id
+        - name
+        - email
+        - password
+      properties:
+        id:
+          type: string
+          example: johnsmith
+        name:
+          type: string
+          example: John Smith
+        email:
+          type: string
+          example: "John.Smith@gmail.com"
+        password:
+          type: string
+          example: "secrect"
+
+    AccountGet:
+      type: object
+      required:
+        - id
+        - name
+        - email
+      properties:
+        id:
+          type: string
+          example: johnsmith
+        name:
+          type: string
+          example: John Smith
+        email:
+          type: string
+          example: "John.Smith@gmail.com"
+
+    AccountPatch:
+      type: object
+      properties:
+        name:
+          type: string
+          example: John Smith
+        email:
+          type: string
+          example: "John.Smith@gmail.com"
+        password:
+          type: string
+          example: "secrect"
+
+    AccountBids:
+      type: array
+      items:
+        type: object
+        required:
+          - id
+          - vehicle_id
+          - vehicle_name
+          - bid_time
+          - bid_price
+        properties:
+          id:
+            type: number
+            example: 12
+          vehicle_id:
+            type: number
+            example: 1324
+          vehicle_name:
+            type: string
+            example: "Civic"
+          bid_time:
+            type: string
+            example: "2012-08-19 14:03:32"
+          bid_price:
+            type: number
+            example: 120000
+
+    VehicleBids:
+      type: array
+      items:
+        $ref: "#/components/schemas/VehicleBid"
+
+    VehicleBid:
+      type: object
+      required:
+        - id
+        - account_id
+        - account_name
+        - bid_time
+        - bid_price
+      properties:
+        id:
+          type: number
+          example: 12
+        account_id:
+          type: string
+          example: johnsmith
+        account_name:
+          type: string
+          example: "John Smith"
+        bid_time:
+          type: string
+          example: "2012-08-19 14:03:32"
+        bid_price:
+          type: number
+          example: 120000
+
+    Vehicles:
+      type: array
+      items:
+        type: object
+        required:
+          - id
+          - brand
+          - model
+          - year
+        properties:
+          id:
+            type: number
+            example: 1232
+          brand:
+            type: string
+            example: "BMW"
+          model:
+            type: string
+            example: "X5"
+          year:
+            type: number
+            example: 2015
+
+    VehiclePost:
+      type: object
+      required:
+        - brand
+        - model
+        - year
+        - odomete
+        - color
+      properties:
+        brand:
+          type: string
+          example: "BMW"
+        model:
+          type: string
+          example: "X5"
+        year:
+          type: number
+          example: 2015
+        odomete:
+          type: number
+          example: 34000
+        color:
+          type: string
+          example: "Black"
+
+    VehicleGet:
+      type: object
+      required:
+        - id
+        - brand
+        - model
+        - year
+        - odomete
+        - color
+      properties:
+        id:
+          type: number
+          example: 1232
+        brand:
+          type: string
+          example: "BMW"
+        model:
+          type: string
+          example: "X5"
+        year:
+          type: number
+          example: 2015
+        odomete:
+          type: number
+          example: 34000
+        color:
+          type: string
+          example: "Black"
+
+    Bid:
+      type: object
+      required:
+        - vehicle_id
+        - price
+      properties:
+        vehicle_id:
+          type: number
+          example: 234
+        price:
+          type: number
+          example: 12500
+
+    Login:
+      type: object
+      required:
+        - id
+        - password
+      properties:
+        id:
+          type: string
+          example: johnsmith
+        password:
+          type: string
+          example: secret
+
+    JWT:
+      type: object
+      required:
+        - token
+      properties:
+        token:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+  responses:
+    BadRequest:
+      description: The request is incorrect or corrupted
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: number
+                format: int32
+                example: 400
+              message:
+                type: string
+                example: "The request is incorrect or corrupted"
+
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: number
+                format: int32
+                example: 404
+              message:
+                type: string
+                example: "The specified resource was not found"
+
+    Unauthorized:
+      description: The client is unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: number
+                format: int32
+                example: 401
+              message:
+                type: string
+                example: "The client is unauthorized"
+
+    Forbidden:
+      description: The client doesn't not have permission
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: number
+                format: int32
+                example: 403
+              message:
+                type: string
+                example: "The client does not have permission"
