@@ -26,20 +26,20 @@
   "dependencies": {
     "config": "2.0.1",
     "cors": "^2.8.4",
-    "fastify": "2.0.0-rc.0",
+    "fastify": "2.0.0-rc.2",
     "fastify-jwt": "^0.5.0",
-    "fastify-plugin": "^1.2.1",
+    "fastify-plugin": "^1.4.0",
     "knex": "^0.16.3"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
     "chai": "^4.2.0",
-    "eslint": "^5.9.0",
+    "eslint": "^5.10.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "mocha": "^5.2.0",
     "nyc": "^13.1.0",
-    "prettier": "^1.15.2",
+    "prettier": "^1.15.3",
     "prettylint": "^1.0.0",
     "supertest": "^3.3.0"
   }
