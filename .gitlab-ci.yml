@@ -11,35 +11,21 @@ eslint:
   image: node:alpine
   script:
     - npm install && npm run lint
-  only:
-    - branches
-  except:
-    - master
 
 prettylint:
   stage: test
   image: node:alpine
   script:
     - npm install && npm run prettylint
-  only:
-    - branches
-  except:
-    - master
 
 package-audit:
   stage: test
   image: node:alpine
   script:
     - npm audit
-  only:
-    - branches
-  except:
-    - master
 
 test:
   stage: test
   image: node:alpine
   script:
     - npm install && npm run test
-  only:
-    - branches
