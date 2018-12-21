@@ -79,6 +79,10 @@ class MemoryStorage {
     }
 
     const bids = await this.getBids({ vehicle_id: vid });
+    if (bids.length === 0) {
+      return;
+    }
+
     const max = bids.reduce((prev, current) =>
       prev.price > current.price ? prev : current
     );
