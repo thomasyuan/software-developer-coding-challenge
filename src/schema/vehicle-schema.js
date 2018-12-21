@@ -89,9 +89,18 @@ module.exports.vehicle = {
         model: { type: "string" },
         year: { type: "number" },
         odometer: { type: "number" },
-        color: { type: "string" }
+        color: { type: "string" },
+        owner_id: { type: "string" }
       },
-      required: ["id", "brand", "model", "year", "odometer", "color"]
+      required: [
+        "id",
+        "brand",
+        "model",
+        "year",
+        "odometer",
+        "color",
+        "owner_id"
+      ]
     }
   }
 };

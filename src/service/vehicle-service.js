@@ -14,7 +14,7 @@ class Account {
   }
 
   async getUserVehicles(uid) {
-    return await this.storage.getVehicles({ account_id: uid });
+    return await this.storage.getVehicles({ owner_id: uid });
   }
 
   async getVehicleById(vid) {

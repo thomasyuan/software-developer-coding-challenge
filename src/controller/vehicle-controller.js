@@ -18,7 +18,7 @@ function vehicles(fastify, ops, next) {
 
     try {
       const vehicle = Object.assign(req.body);
-      vehicle.account_id = req.user.id;
+      vehicle.owner_id = req.user.id;
       await vehicleService.addVehicle(vehicle);
       reply.code(200).send();
     } catch (e) {

@@ -493,6 +493,7 @@ components:
         - year
         - odometer
         - color
+        - owner_id
       properties:
         id:
           type: number
@@ -512,6 +513,9 @@ components:
         color:
           type: string
           example: "Black"
+        owner_id:
+          type: string
+          example: "johnsmith"
 
     Bid:
       type: object
