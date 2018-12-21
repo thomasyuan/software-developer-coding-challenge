@@ -14,12 +14,7 @@ describe("Test Vehicle", function() {
         .post("/vehicles")
         .set("Content-Type", "application/json")
         .set("Accept", "application/json")
-        .send({
-          id: "johnsmith",
-          name: "John Smith",
-          email: "John.Smith@gmail.com",
-          password: "secret"
-        })
+        .send()
         .end(function(err, res) {
           expect(res.statusCode).to.equal(401);
           expect(res.body).to.be.an("object");
@@ -55,6 +50,35 @@ describe("Test Vehicle", function() {
               expect(res.body).to.be.an("object");
               done();
             });
+        });
+    });
+
+    it("should return 400 without body", function(done) {
+      supertest(fastify.server)
+        .post("/vehicles")
+        .set("Authorization", `Bearer ${token}`)
+        .send()
+        .end(function(err, res) {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body).to.be.an("object");
+          done();
+        });
+    });
+
+    it("should return 400 without color", function(done) {
+      supertest(fastify.server)
+        .post("/vehicles")
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          brand: "BMW",
+          model: "X5",
+          year: 2017,
+          odometer: 12000
+        })
+        .end(function(err, res) {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body).to.be.an("object");
+          done();
         });
     });
   });
