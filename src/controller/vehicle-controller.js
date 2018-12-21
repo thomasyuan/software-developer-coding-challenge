@@ -55,6 +55,21 @@ function vehicles(fastify, ops, next) {
     }
   });
 
+  const vehicleGetOpt = {
+    schema: Schema.vehicle
+  };
+
+  fastify.get("/vehicles/:id", vehicleGetOpt, async req => {
+    fastify.log.trace(req.params);
+
+    const vehicle = await vehicleService.getVehicleById(req.params.id);
+    if (!vehicle) {
+      throw HttpError.NotFound(`vehicle ${req.params.id} does not exist.`);
+    }
+
+    return vehicle;
+  });
+
   next();
 }
 

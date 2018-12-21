@@ -24,14 +24,6 @@ module.exports.vehiclesPost = {
 };
 
 module.exports.vehiclesGet = {
-  headers: {
-    type: "object",
-    properties: {
-      Authorization: { type: "string" }
-    },
-    required: ["Authorization"]
-  },
-
   querystring: {
     brand: { type: "string" }
   },
@@ -53,7 +45,7 @@ module.exports.vehiclesGet = {
   }
 };
 
-module.exports.meVehiclesGet = {
+module.exports.meVehicles = {
   headers: {
     type: "object",
     properties: {
@@ -75,6 +67,31 @@ module.exports.meVehiclesGet = {
         },
         required: ["id", "brand", "model", "year"]
       }
+    }
+  }
+};
+
+module.exports.vehicle = {
+  params: {
+    type: "object",
+    properties: {
+      id: { type: "number" }
+    },
+    required: ["id"]
+  },
+
+  response: {
+    200: {
+      type: "object",
+      properties: {
+        id: { type: "number" },
+        brand: { type: "string" },
+        model: { type: "string" },
+        year: { type: "number" },
+        odometer: { type: "number" },
+        color: { type: "string" }
+      },
+      required: ["id", "brand", "model", "year", "odometer", "color"]
     }
   }
 };

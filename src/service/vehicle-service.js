@@ -16,6 +16,10 @@ class Account {
   async getUserVehicles(uid) {
     return await this.storage.getVehicles({ account_id: uid });
   }
+
+  async getVehicleById(vid) {
+    return await this.storage.getVehicle(vid);
+  }
 }
 
 module.exports = Account;
