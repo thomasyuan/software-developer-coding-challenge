@@ -42,7 +42,7 @@ class MemoryStorage {
       }
 
       if (match) {
-        results.push(v);
+        results.push(Object.assign(v));
       }
     }
 
@@ -63,8 +63,26 @@ class MemoryStorage {
     return this.filterMap(vehicles, filter);
   }
 
+  async addBid(bid) {
+    const id = bids.size;
+    bid.id = id;
+    bids.set(id, bid);
+  }
+
   async getBids(filter) {
     return this.filterMap(bids, filter);
+  }
+
+  async getVehicleBidWinner(vid) {
+    if (!vehicles.has(vid)) {
+      return;
+    }
+
+    const bids = await this.getBids({ vehicle_id: vid });
+    const max = bids.reduce((prev, current) =>
+      prev.price > current.price ? prev : current
+    );
+    return max;
   }
 
   async shutdown() {}

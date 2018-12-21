@@ -11,8 +11,6 @@ describe("Test Account", function() {
     it("should return token", function(done) {
       supertest(fastify.server)
         .post("/accounts")
-        .set("Content-Type", "application/json")
-        .set("Accept", "application/json")
         .send({
           id: "johnsmith",
           name: "John Smith",
@@ -31,8 +29,6 @@ describe("Test Account", function() {
     it("same account id shouldn't be accepted", function(done) {
       supertest(fastify.server)
         .post("/accounts")
-        .set("Content-Type", "application/json")
-        .set("Accept", "application/json")
         .send({
           id: "johnsmith",
           name: "John Smith",
@@ -50,8 +46,6 @@ describe("Test Account", function() {
     it("invalid input should return bad request", function(done) {
       supertest(fastify.server)
         .post("/accounts")
-        .set("Content-Type", "application/json")
-        .set("Accept", "application/json")
         .send({
           id: "johnsmith"
         })
@@ -66,7 +60,6 @@ describe("Test Account", function() {
       supertest(fastify.server)
         .post("/accounts")
         .set("Accept", "application/json")
-        .send()
         .end(function(err, res) {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.be.an("object");
@@ -79,7 +72,6 @@ describe("Test Account", function() {
     it("should return 200 for exist account", function(done) {
       supertest(fastify.server)
         .head("/accounts/johnsmith")
-        .send()
         .end(function(err, res) {
           expect(res.statusCode).to.equal(200);
           done();
@@ -89,7 +81,6 @@ describe("Test Account", function() {
     it("should return 404 for non-exist account", function(done) {
       supertest(fastify.server)
         .head("/accounts/nobody")
-        .send()
         .end(function(err, res) {
           expect(res.statusCode).to.equal(404);
           done();
