@@ -1,0 +1,22 @@
+version: "3"
+services:
+  postgres:
+    image: "postgres:alpine"
+    environment:
+      - POSTGRES_PASSWORD=password
+    ports:
+      - 5432:5432
+
+  backend:
+    image: thomasyuan/auction-backend
+    container_name: backend
+    depends_on:
+      - postgres
+    restart: always
+    ports:
+      - 8000:8000
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=postgres
+    links:
+      - postgres

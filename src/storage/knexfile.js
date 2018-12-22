@@ -15,7 +15,8 @@ module.exports = {
     connection: {
       database: "postgres",
       user: "postgres",
-      password: "password"
+      password: "password",
+      host: process.env.DB_HOST || "localhost"
     },
     pool: {
       min: 2,
