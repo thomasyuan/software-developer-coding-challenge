@@ -37,11 +37,10 @@ module.exports.vehicleBids = {
         properties: {
           id: { type: "number" },
           account_id: { type: "string" },
-          account_name: { type: "string" },
           time: { type: "string" },
           price: { type: "number" }
         },
-        required: ["id", "account_id", "account_name", "time", "price"]
+        required: ["id", "account_id", "time", "price"]
       }
     }
   }
@@ -61,11 +60,10 @@ module.exports.vehicleBidWinner = {
       properties: {
         id: { type: "number" },
         account_id: { type: "string" },
-        account_name: { type: "string" },
         time: { type: "string" },
         price: { type: "number" }
       },
-      required: ["id", "account_id", "account_name", "time", "price"]
+      required: ["id", "account_id", "time", "price"]
     }
   }
 };

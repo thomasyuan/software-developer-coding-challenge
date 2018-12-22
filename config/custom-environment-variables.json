@@ -1,13 +1,6 @@
 {
   "storage": {
-    "type": "STORAGE_TYPE",
-    "db": {
-      "host": "STORAGE_DB_HOST",
-      "database": "STORAGE_DB_DATABASE",
-      "user": "STORAGE_DB_USER",
-      "password": "STORAGE_DB_PASSWORD",
-      "debug": "STORAGE_DB_DEBUG"
-    }
+    "type": "STORAGE_TYPE"
   },
   "jwt": {
     "signing_key": "JWT_SIGNING_KEY"

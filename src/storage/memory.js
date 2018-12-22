@@ -5,6 +5,8 @@ const bids = new Map();
 const vehicles = new Map();
 
 class MemoryStorage {
+  async initialize() {}
+
   async addAccount(account) {
     if (accounts.has(account.id)) {
       throw new Error(`Account id ${account.id} is taken.`);
@@ -50,7 +52,7 @@ class MemoryStorage {
   }
 
   async addVehicle(vehicle) {
-    const id = vehicles.size;
+    const id = vehicles.size + 1;
     vehicle.id = id;
     vehicles.set(id, vehicle);
   }
@@ -64,7 +66,7 @@ class MemoryStorage {
   }
 
   async addBid(bid) {
-    const id = bids.size;
+    const id = bids.size + 1;
     bid.id = id;
     bids.set(id, bid);
   }
@@ -75,7 +77,7 @@ class MemoryStorage {
 
   async getVehicleBidWinner(vid) {
     if (!vehicles.has(vid)) {
-      return;
+      throw new Error(`vehicle ${vid} does not exist.`);
     }
 
     const bids = await this.getBids({ vehicle_id: vid });

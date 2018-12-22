@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "prettylint": "prettylint 'index.js' 'server.js' 'src/**/*.js'",
-    "test": "LOG_ENABLE='false' nyc --reporter=text-summary mocha test/bootstrap.js test/*.test.js --timeout 60000",
+    "test": "rm ./auction.sqlite3; LOG_ENABLE='false' nyc --reporter=text-summary mocha test/bootstrap.js test/*.test.js --timeout 60000",
     "lint": "eslint index.js server.js src"
   },
   "repository": {
@@ -29,7 +29,8 @@
     "fastify": "2.0.0-rc.2",
     "fastify-jwt": "^0.5.0",
     "fastify-plugin": "^1.4.0",
-    "knex": "^0.16.3"
+    "knex": "^0.16.3",
+    "sqlite3": "^4.0.4"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",

@@ -38,7 +38,7 @@ describe("Test Bid", function() {
             .post("/bids")
             .set("Authorization", `Bearer ${anotherToken}`)
             .send({
-              vehicle_id: 0,
+              vehicle_id: 1,
               price: 12300
             })
             .end(function(err, res) {
@@ -66,7 +66,7 @@ describe("Test Bid", function() {
             .post("/bids")
             .set("Authorization", `Bearer ${token}`)
             .send({
-              vehicle_id: 0,
+              vehicle_id: 1,
               price: 12300
             })
             .end(function(err, res) {
@@ -96,7 +96,7 @@ describe("Test Bid", function() {
         .post("/bids")
         .set("Authorization", `Bearer ${anotherToken}`)
         .send({
-          vehicle_id: 0
+          vehicle_id: 1
         })
         .end(function(err, res) {
           expect(res.statusCode).to.equal(400);
@@ -128,7 +128,7 @@ describe("Test Bid", function() {
         .post("/bids")
         .set("Authorization", `Bearer ${anotherToken}`)
         .send({
-          vehicle_id: 0,
+          vehicle_id: 1,
           price: 11000
         })
         .end(function(err, res) {
@@ -146,7 +146,7 @@ describe("Test Bid", function() {
         .post("/bids")
         .set("Authorization", `Bearer ${anotherToken}`)
         .send({
-          vehicle_id: 0,
+          vehicle_id: 1,
           price: 15000
         })
         .end(function(err, res) {
@@ -170,32 +170,33 @@ describe("Test Bid", function() {
         });
     });
 
-    it("should return array of one bid with vehicle id 0", function(done) {
+    it("should return array of one bid with vehicle id 1", function(done) {
       supertest(fastify.server)
-        .get("/vehicles/0/bids")
+        .get("/vehicles/1/bids")
         .end(function(err, res) {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.be.an("array");
           expect(res.body.length).to.equal(1);
-          expect(res.body[0].account_name).to.equal("Kevin");
+          expect(res.body[0].account_id).to.equal("kevin");
           done();
         });
     });
   });
 
   describe("GET /vehicles/:id/winner", function() {
-    it("should return 404 with non-exist vehicle id", function(done) {
+    it("should return 400 with non-exist vehicle id", function(done) {
       supertest(fastify.server)
         .get("/vehicles/100/winner")
         .end(function(err, res) {
-          expect(res.statusCode).to.equal(404);
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.message).to.equal("vehicle 100 does not exist.");
           done();
         });
     });
 
-    it("should return winner with vehicle id 0", function(done) {
+    it("should return winner with vehicle id 1", function(done) {
       supertest(fastify.server)
-        .get("/vehicles/0/winner")
+        .get("/vehicles/1/winner")
         .end(function(err, res) {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.be.an("object");

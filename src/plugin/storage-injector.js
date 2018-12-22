@@ -11,14 +11,13 @@ async function storageInjector(fastify, opts, next) {
       break;
 
     case "database": {
-      const db = require("../util/db-connection");
-      await db.initialize();
       Storage = require("../storage/database");
       break;
     }
   }
 
   const storage = new Storage();
+  await storage.initialize();
   fastify.decorate("storage", storage);
 
   next();

@@ -10,3 +10,5 @@ Dockerfile*
 docker-compose.yml
 .nyc_output/
 .DS_Store
+test/
+*.sqlite3

@@ -1,16 +1,6 @@
 {
   "storage": {
-    "type": "memory",
-    "db": {
-      "host": "localhost",
-      "port": 5432,
-      "user": "postgres",
-      "password": "password",
-      "database": "postgres",
-      "debug": "true",
-      "min_conn": 1,
-      "max_conn": 20
-    }
+    "type": "database"
   },
   "jwt": {
     "signing_key": "Y&R$,w'69Q4L7~8^`rXB4d8n4xjd`FL(",

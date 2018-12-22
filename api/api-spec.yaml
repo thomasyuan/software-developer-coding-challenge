@@ -278,7 +278,7 @@ paths:
     post:
       tags:
         - Bid
-      summary: put a new bid on vechile
+      summary: put a new bid on vehicle
       security:
         - BearerAuth: []
       requestBody:
@@ -416,7 +416,6 @@ components:
       required:
         - id
         - account_id
-        - account_name
         - time
         - price
       properties:
@@ -426,9 +425,6 @@ components:
         account_id:
           type: string
           example: johnsmith
-        account_name:
-          type: string
-          example: "John Smith"
         time:
           type: string
           example: "2012-08-19 14:03:32"

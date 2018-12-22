@@ -46,7 +46,13 @@ function bids(fastify, ops, next) {
   fastify.get("/vehicles/:id/winner", vehicleBidWinnerGetOpt, async req => {
     fastify.log.trace(req.params);
 
-    const winner = await bidService.getVehicleBidWinner(req.params.id);
+    let winner;
+    try {
+      winner = await bidService.getVehicleBidWinner(req.params.id);
+    } catch (e) {
+      throw HttpError.BadRequest(e.message);
+    }
+
     if (!winner) {
       throw HttpError.NotFound(`no bids for ${req.params.id}`);
     }
