@@ -22,7 +22,7 @@ function vehicles(fastify, ops, next) {
       await vehicleService.addVehicle(vehicle);
       reply.code(200).send();
     } catch (e) {
-      throw HttpError.BadRequest(e);
+      return HttpError.BadRequest(e);
     }
   });
 
@@ -36,7 +36,7 @@ function vehicles(fastify, ops, next) {
     try {
       return vehicleService.getVehicles(Object.assign(req.query));
     } catch (e) {
-      throw HttpError.BadRequest(e);
+      return HttpError.BadRequest(e);
     }
   });
 
@@ -51,7 +51,7 @@ function vehicles(fastify, ops, next) {
     try {
       return vehicleService.getUserVehicles(req.user.id);
     } catch (e) {
-      throw HttpError.BadRequest(e);
+      return HttpError.BadRequest(e);
     }
   });
 
@@ -64,7 +64,7 @@ function vehicles(fastify, ops, next) {
 
     const vehicle = await vehicleService.getVehicleById(req.params.id);
     if (!vehicle) {
-      throw HttpError.NotFound(`vehicle ${req.params.id} does not exist.`);
+      return HttpError.NotFound(`vehicle ${req.params.id} does not exist.`);
     }
 
     return vehicle;

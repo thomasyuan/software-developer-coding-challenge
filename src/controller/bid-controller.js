@@ -21,7 +21,7 @@ function bids(fastify, ops, next) {
       await bidService.createBid(req.user.id, bid);
       reply.code(200).send();
     } catch (e) {
-      throw HttpError.BadRequest(e);
+      return HttpError.BadRequest(e);
     }
   });
 
@@ -35,7 +35,7 @@ function bids(fastify, ops, next) {
     try {
       return await bidService.getVehicleBids(req.params.id);
     } catch (e) {
-      throw HttpError.BadRequest(e);
+      return HttpError.BadRequest(e);
     }
   });
 
@@ -50,11 +50,11 @@ function bids(fastify, ops, next) {
     try {
       winner = await bidService.getVehicleBidWinner(req.params.id);
     } catch (e) {
-      throw HttpError.BadRequest(e.message);
+      return HttpError.BadRequest(e.message);
     }
 
     if (!winner) {
-      throw HttpError.NotFound(`no bids for ${req.params.id}`);
+      return HttpError.NotFound(`no bids for ${req.params.id}`);
     }
 
     return winner;
@@ -71,7 +71,7 @@ function bids(fastify, ops, next) {
     try {
       return await bidService.getUserBids(req.user.id);
     } catch (e) {
-      throw HttpError.BadRequest(e);
+      return HttpError.BadRequest(e);
     }
   });
 

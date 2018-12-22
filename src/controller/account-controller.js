@@ -24,7 +24,7 @@ function accounts(fastify, ops, next) {
       const token = await fastify.jwt.sign(payload);
       return { token: token };
     } catch (e) {
-      throw HttpError.BadRequest(e.message);
+      return HttpError.BadRequest(e.message);
     }
   });
 
@@ -40,7 +40,7 @@ function accounts(fastify, ops, next) {
       return true;
     }
 
-    throw HttpError.NotFound();
+    return HttpError.NotFound();
   });
 
   const meGetOpt = {
@@ -55,7 +55,7 @@ function accounts(fastify, ops, next) {
     if (account) {
       return account;
     }
-    throw HttpError.NotFound();
+    return HttpError.NotFound();
   });
 
   const mePatchOpt = {
@@ -69,14 +69,14 @@ function accounts(fastify, ops, next) {
 
     // empty object
     if (Object.values(req.body).length === 0) {
-      throw HttpError.BadRequest("invalid input");
+      return HttpError.BadRequest("invalid input");
     }
 
     try {
       await accountService.updateAccount(req.user.id, Object.assign(req.body));
       reply.code(200).send();
     } catch (e) {
-      throw HttpError.BadRequest(e);
+      return HttpError.BadRequest(e);
     }
   });
 
@@ -93,7 +93,7 @@ function accounts(fastify, ops, next) {
     );
 
     if (!passed) {
-      throw HttpError.BadRequest("invalid username and password");
+      return HttpError.BadRequest("invalid username and password");
     }
 
     const payload = {
